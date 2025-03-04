@@ -1,0 +1,242 @@
+/* --------------------------
+   Base & Reset Styles
+--------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* Deep blue to black gradient background */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: linear-gradient(135deg, #0A1F44, #1C3B70);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* --------------------------
+   Hero Section (Full-screen)
+--------------------------- */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+.hero-content {
+  z-index: 1;
+}
+
+.animated-headline {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeInSlide 2s ease-out forwards;
+}
+
+@keyframes fadeInSlide {
+  0% { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.tagline {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: slideIn 2.5s ease-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes slideIn {
+  0% { opacity: 0; transform: translateX(-40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* --------------------------
+   Supported Languages Section in Hero
+--------------------------- */
+.languages-supported {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.languages-supported img {
+  width: 55px;
+  height: 55px;
+  filter: brightness(0) invert(1);
+  transition: transform 0.3s ease;
+}
+
+.languages-supported img:hover {
+  transform: scale(1.1);
+}
+
+/* --------------------------
+   Get Started Button (Hero)
+--------------------------- */
+.get-started-button {
+  display: inline-block;
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  background-color: #2b5876;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 2s ease-out forwards;
+  animation-delay: 2s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.get-started-button:hover {
+  background-color: #24506c;
+}
+
+/* --------------------------
+   Reviews Section
+--------------------------- */
+.reviews-section {
+  padding: 60px 20px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.reviews-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.reviews-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.review-card {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+}
+
+.review-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.review-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.review-card .role {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-bottom: 15px;
+}
+
+.review-card .testimonial {
+  font-style: italic;
+  font-size: 1rem;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+/* --------------------------
+   Footer Section
+--------------------------- */
+footer {
+  background: rgba(0, 0, 0, 0.4);
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #333;
+  margin-top: 40px;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.footer-container p {
+  margin-bottom: 10px;
+}
+
+.footer-container nav {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-container nav a {
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-container nav a:hover {
+  color: #fff;
+}
+
+/* --------------------------
+   Responsive Adjustments
+--------------------------- */
+@media (max-width: 768px) {
+  .animated-headline {
+    font-size: 2.5rem;
+  }
+  .tagline {
+    font-size: 1.3rem;
+  }
+  .reviews-section h2 {
+    font-size: 2rem;
+  }
+  .get-started-button {
+    font-size: 1rem;
+    padding: 10px 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .animated-headline {
+    font-size: 2rem;
+  }
+  .tagline {
+    font-size: 1.1rem;
+  }
+  .reviews-section h2 {
+    font-size: 1.8rem;
+  }
+  .get-started-button {
+    font-size: 0.9rem;
+    padding: 8px 20px;
+  }
+}

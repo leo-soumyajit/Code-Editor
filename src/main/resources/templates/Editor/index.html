@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Online Code Compiler</title>
+    <title>Your Code Companion</title>
     <link rel="stylesheet" href="styles.css" />
     <!-- Monaco Editor CSS -->
     <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs/editor/editor.main.min.css">
@@ -11,19 +11,24 @@
 <body>
 <!-- Header Section -->
 <header class="header">
-    <h1>Online Code Compiler</h1>
+    <h1>Your Code Companion</h1>
 </header>
 
-<!-- Main Container (for desktops/laptops, the layout remains side-by-side) -->
+<!-- Background Animation Container -->
+<div class="code-animation"></div>
+
+<!-- Main Container -->
 <div class="container">
     <div class="content-wrapper">
         <!-- Editor Section -->
         <section class="editor-section">
             <div class="editor-header">
+                <!-- Language Icon -->
+                <img id="language-icon" src="Images/Java-Emblem-removebg-preview.png" alt="Language Icon" />
                 <p id="file-name">File used: Main.java</p>
                 <div class="controls">
                     <select id="language-select">
-                        <option value="java">Java</option>
+                        <option value="java" selected>Java</option>
                         <option value="python">Python</option>
                         <option value="c">C</option>
                         <option value="cpp">C++</option>
@@ -60,7 +65,7 @@
     </div>
 </footer>
 
-<!-- Monaco Editor Loader -->
+<!-- Monaco Editor Loader and Custom JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs/loader.min.js"></script>
 <script src="script.js"></script>
 </body>

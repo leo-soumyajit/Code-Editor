@@ -8,10 +8,13 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #2b5876, #4e4376);
-  color: #fff;
-  min-height: 100vh;
+  /* Background updated to match your image:
+     Change the HEX values below if your image has different colors */
+   font-family: 'Menlo', 'Consolas', monospace;
+        /* Deep blue to black gradient matching the image */
+        background: linear-gradient(135deg, #0A1F44, #000000);
+        color: #fff;
+        min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -23,10 +26,12 @@ body {
   text-align: center;
   padding: 20px;
   background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid #333;
 }
 
 .header h1 {
   font-size: 2.5rem;
+  color: #fff;
 }
 
 /* --------------------------
@@ -34,13 +39,13 @@ body {
 --------------------------- */
 .container {
   width: 100%;
-  max-width: 1600px;  /* Increased maximum width for desktops */
+  max-width: 1600px;  /* Maximum width for large displays */
   margin: 0 auto;
   padding: 20px;
   flex: 1;
 }
 
-/* Content-wrapper: displays the editor and output side-by-side on large screens */
+/* .content-wrapper displays the editor and output side-by-side on desktop/laptop */
 .content-wrapper {
   display: flex;
   gap: 20px;
@@ -50,11 +55,11 @@ body {
    Editor Section
 --------------------------- */
 .editor-section {
-  /* Adjusted flex ratio: Editor takes 3 parts out of a total of 5 parts */
-  flex: 3;
+  /* Editor takes more space */
+  flex: 4;
   background: #1f1f1f;
   border-radius: 8px;
-  padding: 15px;
+  padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
@@ -66,13 +71,17 @@ body {
   align-items: center;
   border-bottom: 1px solid #444;
   padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .editor-header p {
   font-size: 1.1rem;
+  color: #ccc;
 }
 
-/* Control buttons and select elements: Keep them small */
+/* --------------------------
+   Controls - Minimal Style
+--------------------------- */
 .controls {
   display: flex;
   gap: 10px;
@@ -82,37 +91,41 @@ body {
 .controls button {
   padding: 4px 8px;
   font-size: 0.8rem;
-  border: none;
-  border-radius: 4px;
-  background: #007bff;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #2b5876;
   color: #fff;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .controls select:hover,
 .controls button:hover {
-  background: #0056b3;
+  background: #24506c;
+  border-color: #888;
 }
 
-/* Code editor container */
+/* --------------------------
+   Code Editor Container
+--------------------------- */
 #editor-container {
   flex: 1;
   border: 1px solid #333;
   margin-top: 10px;
-  min-height: 600px;  /* ample height for code work */
+  min-height: 600px;
   width: 100%;
+  border-radius: 6px;
+  background: #1f1f1f;
 }
 
 /* --------------------------
    Output Section
 --------------------------- */
 .output-section {
-  /* Adjusted flex ratio: Output takes the remaining 2 parts (i.e. 40% of container) */
   flex: 2;
   background: #1f1f1f;
   border-radius: 8px;
-  padding: 15px;
+  padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
@@ -123,45 +136,49 @@ body {
   border-bottom: 1px solid #444;
   padding-bottom: 5px;
   font-size: 1.5rem;
+  color: #fff;
 }
 
 #output {
   background: #333;
   padding: 15px;
-  border-radius: 4px;
-  font-family: monospace;
+  border-radius: 6px;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
   font-size: 14px;
   line-height: 1.5;
   overflow-x: auto;
   white-space: pre-wrap;
   flex: 1;
+  color: #ddd;
 }
 
 /* --------------------------
    Footer Section
 --------------------------- */
 footer {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.4);
   text-align: center;
   padding: 20px 0;
   margin-top: 20px;
+  border-top: 1px solid #333;
 }
 
 .footer-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #ccc;
+  color: #aaa;
   font-size: 0.9rem;
 }
 
 .footer-container nav {
   display: flex;
   gap: 15px;
+  margin-top: 5px;
 }
 
 .footer-container nav a {
-  color: #ccc;
+  color: #aaa;
   text-decoration: none;
   transition: color 0.3s;
 }
@@ -172,10 +189,10 @@ footer {
 
 /* --------------------------
    Responsive Design
-   (Affect only tablets & mobiles)
+   (For Tablets & Mobiles Only)
 --------------------------- */
 
-/* For screens up to 768px: stack the sections vertically */
+/* For viewports up to 768px */
 @media (max-width: 768px) {
   .content-wrapper {
     flex-direction: column;
@@ -188,7 +205,7 @@ footer {
   .editor-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 8px;
   }
 
   #editor-container {
@@ -204,7 +221,7 @@ footer {
   }
 }
 
-/* For screens up to 480px: further adjust for small phones */
+/* For viewports up to 480px */
 @media (max-width: 480px) {
   .header h1 {
     font-size: 1.5rem;
@@ -225,4 +242,49 @@ footer {
   #output {
     font-size: 12px;
   }
+}
+    .code-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .code-line {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.15);
+      white-space: nowrap;
+      font-size: 16px;
+      animation: floatDown linear infinite;
+      user-select: none;
+    }
+
+    @keyframes floatDown {
+      0% {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.3;
+      }
+      50% {
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+/* Language Icon Styling */
+.editor-header #language-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+  object-fit: cover;
 }
