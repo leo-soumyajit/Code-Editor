@@ -1,4 +1,4 @@
-// Mapping of language to the file name used for code execution
+// Mapping of language to file name used for execution.
 const fileMapping = {
   "java": "Main.java",
   "python": "Main.py",
@@ -8,9 +8,9 @@ const fileMapping = {
 
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs' }});
 require(['vs/editor/editor.main'], function() {
-  // Define a custom theme (optional)
+  // Define a custom theme (optional).
   monaco.editor.defineTheme('myCustomTheme', {
-    base: 'vs-dark', // Use 'vs-dark' as a base
+    base: 'vs-dark',
     inherit: true,
     rules: [
       { token: '', foreground: 'C8C8C8', background: '1E1E1E' },
@@ -30,31 +30,32 @@ require(['vs/editor/editor.main'], function() {
     }
   });
 
-  // Create the Monaco Editor instance
+  // Create and configure the Monaco Editor instance.
   const editor = monaco.editor.create(document.getElementById('editor-container'), {
     value: '// Write your code here...',
-    language: 'java',  // default language; will update as user selects another
-    theme: 'vs-dark',  // default theme; can be changed by the user
-    automaticLayout: true,
+    language: 'java',
+    theme: 'vs-dark',
+    automaticLayout: true
   });
 
-  // Update editor language and file-name label when language changes:
+  // Update editor language and file label when the language selector changes.
   document.getElementById('language-select').addEventListener('change', function() {
     const selectedLang = this.value;
     monaco.editor.setModelLanguage(editor.getModel(), selectedLang === 'cpp' ? 'cpp' : selectedLang);
     document.getElementById('file-name').textContent = "File used: " + fileMapping[selectedLang];
   });
 
-  // Change theme when the user selects a new theme
+  // Update the theme when the user changes the theme selector.
   document.getElementById('theme-select').addEventListener('change', function() {
     const selectedTheme = this.value;
     monaco.editor.setTheme(selectedTheme);
   });
 
-  // Function to execute code via the backend API
+  // Function to execute code by calling the backend API.
   window.executeCode = function() {
     const code = editor.getValue();
     const language = document.getElementById('language-select').value;
+
     fetch('http://localhost:1010/api/code/execute', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -62,13 +63,11 @@ require(['vs/editor/editor.main'], function() {
     })
       .then(response => response.text())
       .then(output => {
-        const outputEl = document.getElementById('output');
-        outputEl.textContent = output;
+        document.getElementById('output').textContent = output;
       })
       .catch(error => {
         console.error('Error executing code:', error);
-        const outputEl = document.getElementById('output');
-        outputEl.textContent = "Error executing code.";
+        document.getElementById('output').textContent = "Error executing code.";
       });
   };
 });

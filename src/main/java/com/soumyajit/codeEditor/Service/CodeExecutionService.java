@@ -117,7 +117,7 @@ public class CodeExecutionService {
             Files.write(sourceFile, code.getBytes(StandardCharsets.UTF_8));
 
             // Compile with gcc: gcc main.c -o main
-            ProcessBuilder compileBuilder = new ProcessBuilder("gcc", sourceFileName, "-o", "main");
+            ProcessBuilder compileBuilder = new ProcessBuilder("gcc.exe", "main.c", "-o", "main");
             compileBuilder.directory(tempDir.toFile());
             compileBuilder.redirectErrorStream(true);
             Process compileProcess = compileBuilder.start();
@@ -125,8 +125,9 @@ public class CodeExecutionService {
             int compileResult = compileProcess.waitFor();
 
             if (compileResult != 0) {
-                return "Compilation error in " + sourceFileName + ":\n" + compileOutput;
+                return "Compilation error in main.c:\n" + compileOutput;
             }
+
 
             // Run the compiled binary
             ProcessBuilder runBuilder = new ProcessBuilder("./main");

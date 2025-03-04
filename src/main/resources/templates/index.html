@@ -10,46 +10,45 @@
 </head>
 <body>
 <!-- Header Section -->
-<div class="header">
+<header class="header">
     <h1>Online Code Compiler</h1>
-</div>
+</header>
 
-<!-- Main Container -->
+<!-- Main Container (for desktops/laptops, the layout remains side-by-side) -->
 <div class="container">
-    <!-- Editor Section -->
-    <div class="editor-section">
-        <div class="editor-header">
-            <p id="file-name">File used: Main.java</p>
-            <div class="controls">
-                <select id="language-select">
-                    <option value="java">Java</option>
-                    <option value="python">Python</option>
-                    <option value="c">C</option>
-                    <option value="cpp">C++</option>
-                </select>
-                <select id="theme-select">
-                    <option value="vs-dark" selected>Dark (vs-dark)</option>
-                    <option value="vs">Light (vs)</option>
-                    <option value="hc-black">High Contrast (hc-black)</option>
-                    <option value="myCustomTheme">Custom</option>
-                </select>
-                <button onclick="executeCode()">Run Code</button>
+    <div class="content-wrapper">
+        <!-- Editor Section -->
+        <section class="editor-section">
+            <div class="editor-header">
+                <p id="file-name">File used: Main.java</p>
+                <div class="controls">
+                    <select id="language-select">
+                        <option value="java">Java</option>
+                        <option value="python">Python</option>
+                        <option value="c">C</option>
+                        <option value="cpp">C++</option>
+                    </select>
+                    <select id="theme-select">
+                        <option value="vs-dark" selected>Dark (vs-dark)</option>
+                        <option value="vs">Light (vs)</option>
+                        <option value="hc-black">High Contrast (hc-black)</option>
+                        <option value="myCustomTheme">Custom</option>
+                    </select>
+                    <button onclick="executeCode()">Run Code</button>
+                </div>
             </div>
-        </div>
-        <div id="editor-container"></div>
-    </div>
+            <div id="editor-container"></div>
+        </section>
 
-    <!-- Output Section -->
-    <div class="output-section">
-        <h2>Output</h2>
-        <pre id="output"></pre>
+        <!-- Output Section -->
+        <section class="output-section">
+            <h2>Output</h2>
+            <pre id="output"></pre>
+        </section>
     </div>
 </div>
 
-<!-- Monaco Editor Loader -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs/loader.min.js"></script>
-<script src="script.js"></script>
-</body>
+<!-- Footer Section -->
 <footer>
     <div class="footer-container">
         <p>&copy; 2025 Soumyajit Banerjee. All rights reserved.</p>
@@ -60,4 +59,9 @@
         </nav>
     </div>
 </footer>
+
+<!-- Monaco Editor Loader -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs/loader.min.js"></script>
+<script src="script.js"></script>
+</body>
 </html>
