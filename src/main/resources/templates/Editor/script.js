@@ -14,9 +14,30 @@ const languageImages = {
   "cpp": "Images/cpp.png"
 };
 
+// Boilerplate codes for different languages.
+const boilerplateCodes = {
+  "java": `public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, world!");
+    }
+}`,
+  "python": `print("Hello, world!")`,
+  "c": `#include <stdio.h>
+int main() {
+    printf("Hello, world!\\n");
+    return 0;
+}`,
+  "cpp": `#include <iostream>
+using namespace std;
+int main() {
+    cout << "Hello, world!" << endl;
+    return 0;
+}`
+};
+
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs' }});
 require(['vs/editor/editor.main'], function() {
-  // Define a custom theme (optional)
+  // Define a custom theme (optional).
   monaco.editor.defineTheme('myCustomTheme', {
     base: 'vs-dark',
     inherit: true,
@@ -40,24 +61,23 @@ require(['vs/editor/editor.main'], function() {
 
   // Create the Monaco Editor instance.
   const editor = monaco.editor.create(document.getElementById('editor-container'), {
-    value: '// Write your code here...',
+    value: boilerplateCodes["java"], // initial value set to Java boilerplate code
     language: 'java',
     theme: 'vs-dark',
     automaticLayout: true
   });
 
-  // Update editor language and file label (and language icon) when the language selector changes.
+  // Update editor language, file label, language icon, and boilerplate when the language selector changes.
   document.getElementById('language-select').addEventListener('change', function() {
     const selectedLang = this.value;
-    // Update the Monaco Editor language.
     monaco.editor.setModelLanguage(editor.getModel(), selectedLang === 'cpp' ? 'cpp' : selectedLang);
-    // Update the "File used" text.
     document.getElementById('file-name').textContent = "File used: " + fileMapping[selectedLang];
-    // Update the language icon.
     const langIcon = document.getElementById('language-icon');
     if (langIcon) {
       langIcon.src = languageImages[selectedLang];
     }
+    // Set the boilerplate code for the selected language.
+    editor.setValue(boilerplateCodes[selectedLang]);
   });
 
   // Update theme when the theme selector changes.
@@ -70,7 +90,6 @@ require(['vs/editor/editor.main'], function() {
   window.executeCode = function() {
     const code = editor.getValue();
     const language = document.getElementById('language-select').value;
-
     fetch('http://localhost:1010/api/code/execute', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -84,6 +103,12 @@ require(['vs/editor/editor.main'], function() {
         console.error('Error executing code:', error);
         document.getElementById('output').textContent = "Error executing code.";
       });
+  };
+
+  // Function to reset the code to its boilerplate.
+  window.resetCode = function() {
+    const language = document.getElementById('language-select').value;
+    editor.setValue(boilerplateCodes[language]);
   };
 });
 
@@ -113,12 +138,12 @@ function createCodeToken() {
   // Random animation duration between 10s and 30s
   const duration = 10 + Math.random() * 20;
   tokenEl.style.animationDuration = duration + 's';
-  // Random starting vertical position above viewport
+  // Random starting vertical position above viewport.
   tokenEl.style.top = (-Math.random() * 100) + 'px';
 
   animationContainer.appendChild(tokenEl);
 
-  // Recreate token after animation completes
+  // Recreate token after animation completes.
   setTimeout(() => {
     tokenEl.remove();
     createCodeToken();

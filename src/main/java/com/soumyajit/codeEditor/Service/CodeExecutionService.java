@@ -59,7 +59,6 @@ public class CodeExecutionService {
             Process runProcess = runBuilder.start();
             String runOutput = streamToString(runProcess.getInputStream());
             runProcess.waitFor();
-
             return "File used: " + fileName + "\n" + runOutput;
         } catch (Exception e) {
             return "Error executing Java code: " + e.getMessage();
@@ -222,15 +221,15 @@ public class CodeExecutionService {
 
     // Optional: If you want an in-memory Java compiler (unused in this example),
     // you can use classes like JavaSourceFromString. For now, we use javac directly.
-    class JavaSourceFromString extends SimpleJavaFileObject {
-        final String code;
-        JavaSourceFromString(String name, String code) {
-            super(URI.create("string:///" + name.replace('.', '/') + Kind.SOURCE.extension), Kind.SOURCE);
-            this.code = code;
-        }
-        @Override
-        public CharSequence getCharContent(boolean ignoreEncodingErrors) {
-            return code;
-        }
-    }
+//    class JavaSourceFromString extends SimpleJavaFileObject {
+//        final String code;
+//        JavaSourceFromString(String name, String code) {
+//            super(URI.create("string:///" + name.replace('.', '/') + Kind.SOURCE.extension), Kind.SOURCE);
+//            this.code = code;
+//        }
+//        @Override
+//        public CharSequence getCharContent(boolean ignoreEncodingErrors) {
+//            return code;
+//        }
+//    }
 }
