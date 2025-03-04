@@ -240,3 +240,30 @@ footer {
     padding: 8px 20px;
   }
 }
+/* --------------------------
+   Total Active Users Section
+--------------------------- */
+.users-section {
+  padding: 60px 20px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.users-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.user-count {
+  font-size: 3rem;
+  margin-top: 20px;
+  color: #fff;
+}
+.users-section img{
+    width:70px;
+    height:60px;
+      transition: transform 0.3s ease;
+}
+
