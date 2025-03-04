@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Code Compiler</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Monaco Editor CSS -->
+    <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs/editor/editor.main.min.css">
+</head>
+<body>
+<!-- Header Section -->
+<div class="header">
+    <h1>Online Code Compiler</h1>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Editor Section -->
+    <div class="editor-section">
+        <div class="editor-header">
+            <p id="file-name">File used: Main.java</p>
+            <div class="controls">
+                <select id="language-select">
+                    <option value="java">Java</option>
+                    <option value="python">Python</option>
+                    <option value="c">C</option>
+                    <option value="cpp">C++</option>
+                </select>
+                <select id="theme-select">
+                    <option value="vs-dark" selected>Dark (vs-dark)</option>
+                    <option value="vs">Light (vs)</option>
+                    <option value="hc-black">High Contrast (hc-black)</option>
+                    <option value="myCustomTheme">Custom</option>
+                </select>
+                <button onclick="executeCode()">Run Code</button>
+            </div>
+        </div>
+        <div id="editor-container"></div>
+    </div>
+
+    <!-- Output Section -->
+    <div class="output-section">
+        <h2>Output</h2>
+        <pre id="output"></pre>
+    </div>
+</div>
+
+<!-- Monaco Editor Loader -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs/loader.min.js"></script>
+<script src="script.js"></script>
+</body>
+<footer>
+    <div class="footer-container">
+        <p>&copy; 2025 Soumyajit Banerjee. All rights reserved.</p>
+        <nav>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
+        </nav>
+    </div>
+</footer>
+</html>

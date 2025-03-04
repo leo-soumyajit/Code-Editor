@@ -1,0 +1,142 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #2b5876, #4e4376);
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.header {
+  text-align: center;
+  padding: 20px 10px;
+  background: rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+}
+
+/* Main Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Editor Section */
+.editor-section {
+  background: #1f1f1f;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+}
+
+.editor-header p {
+  font-size: 1.1rem;
+}
+
+.controls select,
+.controls button {
+  padding: 8px 12px;
+  margin-left: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.controls select:focus,
+.controls button:focus {
+  outline: none;
+}
+
+.controls button:hover,
+.controls select:hover {
+  background: #0056b3;
+}
+
+#editor-container {
+  height: 60vh;
+  border: 1px solid #333;
+}
+
+/* Output Section */
+.output-section {
+  background: #1f1f1f;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.output-section h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+}
+
+#output {
+  background: #333;
+  padding: 15px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-x: auto;
+  min-height: 150px;
+  white-space: pre-wrap;
+}
+/* Professional Footer Styles */
+footer {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px 0;
+  margin-top: 40px;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.footer-container p {
+  margin-bottom: 10px;
+}
+
+.footer-container nav {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-container nav a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-container nav a:hover {
+  color: #fff;
+}
