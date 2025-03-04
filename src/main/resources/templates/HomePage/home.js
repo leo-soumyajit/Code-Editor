@@ -40,3 +40,21 @@ const observer = new IntersectionObserver((entries, observer) => {
 if (userSection) {
   observer.observe(userSection);
 }
+
+document.addEventListener('mousemove', function(e) {
+  // Create a new neon ripple element
+  const ripple = document.createElement('div');
+  ripple.classList.add('cursor-neon-ripple');
+
+  // Position the ripple at the mouse coordinates
+  ripple.style.left = e.clientX + 'px';
+  ripple.style.top = e.clientY + 'px';
+
+  // Append the ripple to the document body
+  document.body.appendChild(ripple);
+
+  // Remove the ripple element after the animation finishes (2.5 seconds)
+  setTimeout(() => {
+    ripple.remove();
+  }, 2500);
+});
