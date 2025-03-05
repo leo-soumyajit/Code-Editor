@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,7 +16,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -26,43 +32,57 @@ public class WebSecurityConfig {
 
     @Autowired
     @Qualifier("handlerExceptionResolver")
-    private HandlerExceptionResolver handlerExceptionResolver;  // handle exceptions
-
+    private HandlerExceptionResolver handlerExceptionResolver;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
                 .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(sessionConfig->sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests(auth->auth
-                        //.requestMatchers("/admin/**").hasRole("ADMIN")
-//                        .requestMatchers("/auth/**").permitAll()
-//                        .requestMatchers("/password-reset/**").permitAll()
-//                        .requestMatchers("/otp/**").permitAll()
-//                        .requestMatchers(HttpMethod.GET,"/posts/**").permitAll()
-                                .requestMatchers("/api/code/**").authenticated()
+                .sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // Permit OPTIONS preflight requests for all endpoints
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/code/**").authenticated()
                         .anyRequest().permitAll()
                 )
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandlingConfig ->
-                        exceptionHandlingConfig.accessDeniedHandler(accessDeniedHandler())); //handle AccessDenied Exceptions
+                        exceptionHandlingConfig.accessDeniedHandler(accessDeniedHandler()));
 
         return httpSecurity.build();
     }
 
-
-    @Bean //Authentication Manager bean use for Login
+    @Bean // Authentication Manager bean for login
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-
     @Bean
     public AccessDeniedHandler accessDeniedHandler(){
         return (request, response, accessDeniedException) -> {
-            handlerExceptionResolver.resolveException(request,response,null,accessDeniedException);
+            handlerExceptionResolver.resolveException(request, response, null, accessDeniedException);
         };
     }
 
+    // Define a CorsConfigurationSource to set up CORS settings.
+    @Bean
+    public UrlBasedCorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        // Set allowed origins; for development you may use "*" to allow all origins
+        config.setAllowedOrigins(Arrays.asList("http://localhost:63342"));
+        // Allowed headers
+        config.addAllowedHeader("*");
+        // Allowed HTTP methods
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        // Optionally set the max age for the pre-flight request to be cached
+        config.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // Apply this configuration for all endpoints
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 }

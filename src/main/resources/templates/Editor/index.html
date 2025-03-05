@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Code Companion</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="../HomePage/Images/Fabicon.png" />
     <!-- Monaco Editor CSS -->
     <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs/editor/editor.main.min.css">
 </head>
@@ -45,6 +46,14 @@
             </div>
             <div id="editor-container"></div>
         </section>
+
+        <div id="popup" class="popup-overlay" style="display:none;">
+            <span id="popup-message"></span>
+            <div id="popup-timer"></div>
+            <span class="close">&times;</span>
+        </div>
+
+
 
         <!-- Output Section -->
         <section class="output-section">

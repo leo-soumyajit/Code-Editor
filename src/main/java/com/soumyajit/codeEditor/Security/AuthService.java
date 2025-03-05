@@ -9,11 +9,14 @@ import com.soumyajit.codeEditor.Entities.User;
 import com.soumyajit.codeEditor.Exception.ResourceNotFound;
 import com.soumyajit.codeEditor.Repository.UserRepository;
 import com.soumyajit.codeEditor.Security.OTPServiceAndValidation.OtpService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -86,13 +89,52 @@ public class AuthService {
 
     }
 
-    private void sendWelcomeEmail(SignUpRequestDTOS signUpRequestDTOS){
-        //Send welcome message to user
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(signUpRequestDTOS.getEmail());
-        message.setSubject("Welcome Message");
-        message.setText("Welcome To Our Website Dear "+signUpRequestDTOS.getName());
-        mailSender.send(message);
+    private void sendWelcomeEmail(SignUpRequestDTOS signUpRequestDTOS) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setTo(signUpRequestDTOS.getEmail());
+            helper.setSubject("Welcome to Our Website");
+
+            String htmlMsg = "<!DOCTYPE html>"
+                    + "<html lang=\"en\">"
+                    + "<head>"
+                    + "<meta charset=\"UTF-8\">"
+                    + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
+                    + "<title>Welcome to Our Noctrune IDE</title>"
+                    + "<style>"
+                    + "body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; color: #333; }"
+                    + ".email-container { width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }"
+                    + ".header { background-color: #00bcd4; color: #ffffff; padding: 10px 0; text-align: center; border-radius: 10px 10px 0 0; }"
+                    + ".header h1 { margin: 0; font-size: 24px; }"
+                    + ".content { padding: 20px; }"
+                    + ".content p { margin: 10px 0; }"
+                    + ".footer { text-align: center; font-size: 12px; color: #777; margin-top: 20px; }"
+                    + "</style>"
+                    + "</head>"
+                    + "<body>"
+                    + "<div class=\"email-container\">"
+                    + "<div class=\"header\"><h1>Welcome, " + signUpRequestDTOS.getName() + "!</h1></div>"
+                    + "<div class=\"content\">"
+                    + "<p>We are thrilled to have you join our community at <strong>Noctrune IDE</strong>!</p>"
+                    + "<p>Get ready to explore and engage with our platform, designed to foster creativity and learning.</p>"
+                    + "<p>Thank you for being a part of our journey.</p>"
+                    + "</div>"
+                    + "<div class=\"footer\"><p>Noctrune IDE | Haldia , India | Contact Support</p><p>If you didn’t sign up, please ignore this email.</p></div>"
+                    + "</div>"
+                    + "</body>"
+                    + "</html>";
+
+            helper.setText(htmlMsg, true);  // Set to true to indicate that the message is HTML
+
+            mailSender.send(message);
+            System.out.println("Welcome email sent successfully to " + signUpRequestDTOS.getEmail());
+        } catch (MessagingException e) {
+            System.err.println("Failed to send welcome email: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
 
 }

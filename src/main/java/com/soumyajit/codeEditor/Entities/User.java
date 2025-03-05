@@ -35,7 +35,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles;
@@ -43,6 +42,11 @@ public class User implements UserDetails {
     private String bio;
 
     private String profileImage;
+
+    private String githubId;
+    private String linkedInId;
+    private String geeksforgeeksId;
+    private String leetcodeId;
 
 
     @Override

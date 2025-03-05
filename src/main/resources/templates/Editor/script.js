@@ -1,4 +1,13 @@
-// Mapping of language to file name used for execution.
+// --------------------------
+// Authentication Check: Redirect if no access token is found.
+// --------------------------
+if (!localStorage.getItem('accessToken')) {
+  window.location.href = '../HomePage/home.html';
+}
+
+// --------------------------
+// Mapping and Boilerplate Data
+// --------------------------
 const fileMapping = {
   "java": "Main.java",
   "python": "Main.py",
@@ -6,7 +15,6 @@ const fileMapping = {
   "cpp": "main.cpp"
 };
 
-// Mapping of language to image icon source.
 const languageImages = {
   "java": "Images/Java-Emblem-removebg-preview.png",
   "python": "Images/python.png",
@@ -14,7 +22,6 @@ const languageImages = {
   "cpp": "Images/cpp.png"
 };
 
-// Boilerplate codes for different languages.
 const boilerplateCodes = {
   "java": `public class Main {
     public static void main(String[] args) {
@@ -35,9 +42,12 @@ int main() {
 }`
 };
 
-require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs' }});
+// --------------------------
+// Monaco Editor and Editor Functionality
+// --------------------------
+require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs' } });
 require(['vs/editor/editor.main'], function() {
-  // Define a custom theme (optional).
+  // Define a custom theme (optional)
   monaco.editor.defineTheme('myCustomTheme', {
     base: 'vs-dark',
     inherit: true,
@@ -59,15 +69,14 @@ require(['vs/editor/editor.main'], function() {
     }
   });
 
-  // Create the Monaco Editor instance.
   const editor = monaco.editor.create(document.getElementById('editor-container'), {
-    value: boilerplateCodes["java"], // initial value set to Java boilerplate code
+    value: boilerplateCodes["java"], // initial value is Java boilerplate
     language: 'java',
     theme: 'vs-dark',
     automaticLayout: true
   });
 
-  // Update editor language, file label, language icon, and boilerplate when the language selector changes.
+  // When language selector changes: update language, file label, language icon, and boilerplate.
   document.getElementById('language-select').addEventListener('change', function() {
     const selectedLang = this.value;
     monaco.editor.setModelLanguage(editor.getModel(), selectedLang === 'cpp' ? 'cpp' : selectedLang);
@@ -76,36 +85,58 @@ require(['vs/editor/editor.main'], function() {
     if (langIcon) {
       langIcon.src = languageImages[selectedLang];
     }
-    // Set the boilerplate code for the selected language.
     editor.setValue(boilerplateCodes[selectedLang]);
   });
 
-  // Update theme when the theme selector changes.
+  // When theme selector changes: update theme.
   document.getElementById('theme-select').addEventListener('change', function() {
     const selectedTheme = this.value;
     monaco.editor.setTheme(selectedTheme);
   });
 
-  // Function to execute code by calling the backend API.
+  // Function to execute code by calling your backend API.
   window.executeCode = function() {
     const code = editor.getValue();
     const language = document.getElementById('language-select').value;
+    const accessToken = localStorage.getItem('accessToken');
+
     fetch('http://localhost:1010/api/code/execute', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+      },
       body: JSON.stringify({ code, language })
     })
-      .then(response => response.text())
-      .then(output => {
+      .then(response => {
+        // If the response is not OK, check for 401/403.
+        if (!response.ok) {
+          if (response.status === 401 || response.status === 403) {
+            showPopup("Session expired! Redirecting to login in 3 seconds...", "error", true);
+          }
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(result => {
+        let output = result.data || "";
+        // Remove first line if it contains "File used:".
+        const lines = output.split("\n");
+        if (lines.length > 0 && lines[0].trim().startsWith("File used:")) {
+          lines.shift();
+          output = lines.join("\n").trim();
+        }
         document.getElementById('output').textContent = output;
       })
       .catch(error => {
         console.error('Error executing code:', error);
-        document.getElementById('output').textContent = "Error executing code.";
+        if (error.message !== "Network response was not ok") {
+          showPopup("Error executing code.", "error");
+        }
       });
   };
 
-  // Function to reset the code to its boilerplate.
+  // Function to reset the editor content to boilerplate code.
   window.resetCode = function() {
     const language = document.getElementById('language-select').value;
     editor.setValue(boilerplateCodes[language]);
@@ -115,7 +146,7 @@ require(['vs/editor/editor.main'], function() {
 // --------------------------
 // Animated Background: Floating Code Tokens
 // --------------------------
-const codeTokens = [
+const tokens = [
   "print", "#include<stdio.h>", "cout<<", "private", "if", "public static void main", "int main()", "printf",
   "function", "var", "const", "let", "if", "else", "for", "while",
   "switch", "case", "return", "try", "catch", "class", "extends",
@@ -129,21 +160,16 @@ const animationContainer = document.querySelector('.code-animation');
 function createCodeToken() {
   const tokenEl = document.createElement('div');
   tokenEl.className = 'code-line';
-  tokenEl.textContent = codeTokens[Math.floor(Math.random() * codeTokens.length)];
+  tokenEl.textContent = tokens[Math.floor(Math.random() * tokens.length)];
 
-  // Random horizontal position (0% to 100%)
   tokenEl.style.left = Math.random() * 100 + '%';
-  // Random font size between 14px and 28px
   tokenEl.style.fontSize = (14 + Math.random() * 14) + 'px';
-  // Random animation duration between 10s and 30s
   const duration = 10 + Math.random() * 20;
   tokenEl.style.animationDuration = duration + 's';
-  // Random starting vertical position above viewport.
   tokenEl.style.top = (-Math.random() * 100) + 'px';
 
   animationContainer.appendChild(tokenEl);
 
-  // Recreate token after animation completes.
   setTimeout(() => {
     tokenEl.remove();
     createCodeToken();
@@ -153,4 +179,81 @@ function createCodeToken() {
 const tokenCount = 70;
 for (let i = 0; i < tokenCount; i++) {
   createCodeToken();
+}
+
+// --------------------------
+// Total Active Users Counting Animation
+// --------------------------
+function animateCount(id, start, end, duration) {
+  const obj = document.getElementById(id);
+  let current = start;
+  const range = end - start;
+  const increment = range / (duration / 50);
+  const timer = setInterval(() => {
+    current += increment;
+    if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+      current = end;
+      clearInterval(timer);
+    }
+    obj.textContent = Math.floor(current) + "+";
+  }, 50);
+}
+
+// Wait for DOM to load before observing the users-section.
+document.addEventListener('DOMContentLoaded', () => {
+  const userSection = document.querySelector('.users-section');
+  if (userSection) {
+    let hasAnimated = false;
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasAnimated) {
+          hasAnimated = true;
+          animateCount("user-count", 0, 10500, 4000);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(userSection);
+  } else {
+    console.error("Users section not found.");
+  }
+});
+
+// --------------------------
+// Popup Function (Overlay at Right Corner with Countdown)
+// --------------------------
+function showPopup(message, type, redirect = false) {
+  const popup = document.getElementById('popup');
+  const popupMessage = document.getElementById('popup-message');
+  const popupTimer = document.getElementById('popup-timer');
+
+  popupMessage.textContent = message;
+  popup.style.display = 'block';
+
+  if (redirect) {
+    let seconds = 3;
+    popupTimer.textContent = "Redirecting in " + seconds + " seconds...";
+    const interval = setInterval(() => {
+      seconds--;
+      popupTimer.textContent = "Redirecting in " + seconds + " seconds...";
+      if (seconds <= 0) {
+        clearInterval(interval);
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userid');
+        window.location.href = '../LoginAndSignup/auth.html';
+      }
+    }, 1000);
+  } else {
+    popupTimer.textContent = "";
+  }
+
+  const closeBtn = document.getElementsByClassName('close')[0];
+  closeBtn.onclick = () => { popup.style.display = 'none'; };
+
+  window.onclick = (event) => {
+    if (event.target === popup) {
+      popup.style.display = 'none';
+    }
+  };
 }
