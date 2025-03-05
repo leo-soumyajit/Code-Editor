@@ -1,4 +1,4 @@
-package com.soumyajit.codeEditor.Config;
+package com.soumyajit.codeEditor.Configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
