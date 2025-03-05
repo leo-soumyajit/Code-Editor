@@ -58,3 +58,17 @@ document.addEventListener('mousemove', function(e) {
     ripple.remove();
   }, 2500);
 });
+
+
+// When the window finishes loading, remove the loader overlay.
+//window.addEventListener("load", function() {
+//  const loader = document.getElementById("loader");
+//  // Optionally, delay the removal for a smoother effect.
+//  setTimeout(() => {
+//    loader.style.opacity = "0";
+//    // After a short delay, completely hide the loader.
+//    setTimeout(() => {
+//      loader.style.display = "none";
+//    }, 50);
+//  }, 300); // Loader shows for 3 seconds, adjust as needed.
+//});
