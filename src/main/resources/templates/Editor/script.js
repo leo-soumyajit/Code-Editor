@@ -76,6 +76,29 @@ require(['vs/editor/editor.main'], function() {
     automaticLayout: true
   });
 
+
+   // Set an initial font size; you can adjust this default value as needed.
+    let currentFontSize = 14;
+    editor.updateOptions({ fontSize: currentFontSize });
+
+    // --------------------------
+    // New: Text Size Increase/Decrease Functions.
+    // --------------------------
+    window.increaseFontSize = function() {
+      currentFontSize += 2; // Increase font size by 2 points
+      editor.updateOptions({ fontSize: currentFontSize });
+    };
+
+    window.decreaseFontSize = function() {
+      // Ensure that the font doesn't get too small.
+      if (currentFontSize > 8) {
+        currentFontSize -= 2;
+        editor.updateOptions({ fontSize: currentFontSize });
+      }
+    };
+
+
+
   // When language selector changes: update language, file label, language icon, and boilerplate.
   document.getElementById('language-select').addEventListener('change', function() {
     const selectedLang = this.value;
