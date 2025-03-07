@@ -13,6 +13,10 @@
 <!-- Header Section -->
 <header class="header">
     <h1>Your Code Companion</h1>
+    <!-- Profile button on the right: clicking navigates to the profile page -->
+    <a href="../Profile/profile.html" id="profileLink">
+        <img src="Images/userIcon.png" alt="Profile Icon" class="profile-icon-btn">
+    </a>
 </header>
 
 <!-- Background Animation Container -->
@@ -42,7 +46,7 @@
                     </select>
                     <button onclick="executeCode()">Run Code</button>
                     <button onclick="resetCode()">Reset Code</button>
-                    <!-- Text size controls added below -->
+                    <!-- Text size controls -->
                     <button onclick="increaseFontSize()">A+</button>
                     <button onclick="decreaseFontSize()">A-</button>
                 </div>
@@ -65,16 +69,16 @@
 </div>
 
 <!-- Footer Section -->
-<!--<footer>-->
-<!--    <div class="footer-container">-->
-<!--        <p>&copy; 2025 Soumyajit Banerjee. All rights reserved.</p>-->
-<!--        <nav>-->
-<!--            <a href="#">Privacy Policy</a>-->
-<!--            <a href="#">Terms of Service</a>-->
-<!--            <a href="#">Contact</a>-->
-<!--        </nav>-->
-<!--    </div>-->
-<!--</footer>-->
+<footer>
+    <div class="footer-container">
+        <p>&copy; 2025 Soumyajit Banerjee. All rights reserved.</p>
+        <nav>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
+        </nav>
+    </div>
+</footer>
 
 <!-- Monaco Editor Loader and Custom JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs/loader.min.js"></script>

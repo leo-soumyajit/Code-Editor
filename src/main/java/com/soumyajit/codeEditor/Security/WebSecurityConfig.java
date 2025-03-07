@@ -44,7 +44,7 @@ public class WebSecurityConfig {
                 // Permit OPTIONS preflight requests for all endpoints
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/code/**").authenticated()
+                        .requestMatchers("/api/code/**", "/user-profile/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -76,7 +76,7 @@ public class WebSecurityConfig {
         // Allowed headers
         config.addAllowedHeader("*");
         // Allowed HTTP methods
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"));
         // Optionally set the max age for the pre-flight request to be cached
         config.setMaxAge(3600L);
 

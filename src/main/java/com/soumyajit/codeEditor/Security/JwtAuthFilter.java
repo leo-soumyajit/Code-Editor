@@ -32,6 +32,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        // Allow preflight OPTIONS requests to pass without JWT processing.
+        // Bypass JWT check for preflight OPTIONS requests.
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            // Do not call chain.doFilter to avoid any further processing.
+            return;
+        }
+
+
         try {
             final String requestTokenHeader = request.getHeader("Authorization");
             if (requestTokenHeader == null || !requestTokenHeader.startsWith("Bearer")) {

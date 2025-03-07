@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit Profile - Your Code Companion</title>
+    <link rel="stylesheet" href="updateProfile.css">
+    <link rel="icon" type="image/png" href="../HomePage/Images/Fabicon.png">
+</head>
+<body>
+<div class="container">
+    <h1>Edit Your Profile</h1>
+    <form id="editProfileForm">
+        <div class="form-group">
+            <label for="editName">Name:</label>
+            <input type="text" id="editName" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="editBio">Bio:</label>
+            <textarea id="editBio" name="bio" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="editGithub">GitHub ID:</label>
+            <input type="text" id="editGithub" name="githubId">
+        </div>
+        <div class="form-group">
+            <label for="editLinkedIn">LinkedIn ID:</label>
+            <input type="text" id="editLinkedIn" name="linkedInId">
+        </div>
+        <div class="form-group">
+            <label for="editGeeksforgeeks">GeeksforGeeks ID:</label>
+            <input type="text" id="editGeeksforgeeks" name="geeksforgeeksId">
+        </div>
+        <div class="form-group">
+            <label for="editLeetcode">LeetCode ID:</label>
+            <input type="text" id="editLeetcode" name="leetcodeId">
+        </div>
+        <div class="form-buttons">
+            <button type="submit" class="save-btn">Save Changes</button>
+            <button type="button" id="cancelEditBtn" class="cancel-btn">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<!-- Custom Popup (will be created dynamically if not present) -->
+<div id="popup" class="popup"></div>
+
+<script src="updateProfile.js"></script>
+</body>
+</html>

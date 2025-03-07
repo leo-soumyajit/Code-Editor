@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Profile - Your Code Companion</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="icon" type="image/png" href="../HomePage/Images/Fabicon.png">
+</head>
+<body>
+<div class="container">
+    <div class="profile-container">
+        <!-- Left Column: Profile Image & Social Icons -->
+        <div class="profile-left">
+            <div class="profile-picture-wrapper">
+                <img id="profileImage" src="Images/default-profile.png" alt="Profile Picture">
+                <!-- Optional hover edit for image on this page -->
+            </div>
+            <ul class="social-icons">
+                <li><a href="#" target="_blank">GitHub</a></li>
+                <li><a href="#" target="_blank">LinkedIn</a></li>
+                <li><a href="#" target="_blank">GeeksforGeeks</a></li>
+                <li><a href="#" target="_blank">LeetCode</a></li>
+            </ul>
+        </div>
+        <!-- Right Column: Profile Details -->
+        <div class="profile-right">
+            <h2 id="userName">User Name</h2>
+            <p id="bio">Bio: Not provided</p>
+            <p class="profile-detail">GitHub: <span id="githubId">-</span></p>
+            <p class="profile-detail">LinkedIn: <span id="linkedInId">-</span></p>
+            <p class="profile-detail">
+                GeeksforGeeks: <span id="geeksforgeeksId">-</span> | LeetCode: <span id="leetcodeId">-</span>
+            </p>
+            <!-- Clicking this button navigates to the separate edit profile page -->
+            <button id="editProfileBtn" class="edit-btn" onclick="window.location.href='updateProfile.html'">Edit Profile</button>
+        </div>
+    </div>
+</div>
+
+<script src="profile.js"></script>
+</body>
+</html>

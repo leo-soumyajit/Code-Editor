@@ -328,3 +328,22 @@ footer {
 .popup-overlay .close:hover {
   color: #ffeb3b;
 }
+/* New CSS for Profile Button (in Header) */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid #333;
+}
+
+.profile-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  /* Optional: add some margin */
+  margin-left: 20px;
+}
