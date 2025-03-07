@@ -87,15 +87,34 @@ body {
   display: inline-block;
   padding: 12px 30px;
   font-size: 1.2rem;
-  background-color: #2b5876;
+  background-color: rgba(30, 144, 255, 0.5); /* Deep blue neon with 50% opacity */
   color: #fff;
   text-decoration: none;
+  border: 2px solid transparent;
   border-radius: 6px;
-  transition: background 0.3s ease;
-  opacity: 0;
-  animation: fadeIn 2s ease-out forwards;
-  animation-delay: 2s;
+  transition: background-color 0.3s ease,
+              border 0.3s ease,
+              box-shadow 0.3s ease,
+              color 0.3s ease,
+              text-shadow 0.3s ease;
+  opacity: 1;
 }
+
+.get-started-button:hover {
+  background-color: #1e90ff !important;  /* Deep blue neon */
+  border: 2px solid #1e90ff !important;     /* Deep blue neon border */
+  color: #fff !important;                   /* Text remains white */
+  box-shadow: 0 0 10px #1e90ff,
+              0 0 20px #1e90ff,
+              0 0 30px #1e90ff,
+              0 0 40px #1e90ff;
+  text-shadow: 0 0 10px #1e90ff, 0 0 20px #1e90ff;
+  background-image: none !important;
+}
+
+
+
+
 
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -297,13 +316,15 @@ footer {
   position: fixed;
   pointer-events: none;
   border-radius: 50%;
-  border: 2px solid rgba(0, 255, 153, 0.5); /* Reduced opacity neon green */
+  border: 8px solid rgba(30, 144, 255, 0.5); /* Deep Blue Neon border */
   transform: translate(-50%, -50%);
   z-index: 100000;
-  box-shadow: 0 0 5px rgba(0, 255, 153, 0.5),
-              0 0 10px rgba(0, 255, 153, 0.3);
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.5),
+              0 0 10px rgba(30, 144, 255, 0.3);
   animation: neonRipple 2.5s ease-out forwards;
 }
+
+
 
 @keyframes neonRipple {
   0% {

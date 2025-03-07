@@ -1,3 +1,41 @@
+// home.js
+
+// Use window.onload to ensure everything (including assets) is loaded
+window.onload = function() {
+  console.log("Window fully loaded. Starting initialization...");
+
+  // Check if VANTA is accessible
+  if (typeof VANTA === "undefined") {
+    console.error("VANTA is undefined. Please verify that vanta.net.min.js is loaded correctly.");
+  } else {
+    console.log("VANTA is defined.");
+  }
+
+  // Check if the hero element is present
+  const heroEl = document.getElementById("hero");
+  if (!heroEl) {
+    console.error("Element with id 'hero' not found. Please update your HTML to include id='hero' in the hero section.");
+  } else {
+    console.log("Hero element found:", heroEl);
+
+    // Initialize Vanta.NET
+    VANTA.GLOBE({
+      el: "#hero",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0x3f7fff,
+      color2: 0xfdfdfd,
+      backgroundColor: 0x140e2b
+    })
+    console.log("VANTA.HALO initialized on #hero.");
+  }
+};
+
 // Function to animate count from start to end for a given duration (in milliseconds)
 function animateCount(id, start, end, duration) {
   const obj = document.getElementById(id);
@@ -17,7 +55,10 @@ function animateCount(id, start, end, duration) {
 // Function that triggers the counting animation (ensuring it runs only once)
 function triggerUserCountAnimation() {
   const userCountElement = document.getElementById("user-count");
-  // Check if already animated (using a data attribute)
+  if (!userCountElement) {
+    console.error("User count element not found.");
+    return;
+  }
   if (userCountElement.dataset.animated === "true") {
     return;
   }
@@ -27,48 +68,42 @@ function triggerUserCountAnimation() {
 
 // Use IntersectionObserver to detect when the users-section scrolls into view
 const userSection = document.querySelector('.users-section');
-const observer = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      triggerUserCountAnimation();
-      // Optionally, unobserve if you want it to run only once
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.5 }); // Trigger when 50% of the section is visible
-
 if (userSection) {
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        console.log("Users section is now in view. Triggering count animation.");
+        triggerUserCountAnimation();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
   observer.observe(userSection);
+} else {
+  console.error("Element with class 'users-section' not found.");
 }
 
+// Neon ripple effect on mouse move
 document.addEventListener('mousemove', function(e) {
-  // Create a new neon ripple element
   const ripple = document.createElement('div');
   ripple.classList.add('cursor-neon-ripple');
-
-  // Position the ripple at the mouse coordinates
   ripple.style.left = e.clientX + 'px';
   ripple.style.top = e.clientY + 'px';
-
-  // Append the ripple to the document body
   document.body.appendChild(ripple);
-
-  // Remove the ripple element after the animation finishes (2.5 seconds)
   setTimeout(() => {
     ripple.remove();
   }, 2500);
 });
 
-
-// When the window finishes loading, remove the loader overlay.
-//window.addEventListener("load", function() {
-//  const loader = document.getElementById("loader");
-//  // Optionally, delay the removal for a smoother effect.
-//  setTimeout(() => {
-//    loader.style.opacity = "0";
-//    // After a short delay, completely hide the loader.
-//    setTimeout(() => {
-//      loader.style.display = "none";
-//    }, 50);
-//  }, 300); // Loader shows for 3 seconds, adjust as needed.
-//});
+// Uncomment the code below if you're using a loader overlay
+/*
+window.addEventListener("load", function() {
+  const loader = document.getElementById("loader");
+  setTimeout(() => {
+    loader.style.opacity = "0";
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 50);
+  }, 300);
+});
+*/
