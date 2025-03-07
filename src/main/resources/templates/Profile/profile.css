@@ -1,4 +1,4 @@
-/* Import Google Fonts */
+/* Import Google Fonts (Montserrat) */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 
 /* Reset & Base Styles */
@@ -9,206 +9,195 @@
 }
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #f1f5f8;
-  color: #444;
-  padding-bottom: 80px;
+  background-color: #f7f9fc;
+  color: #333;
+  padding: 20px;
 }
 
-/* Container */
+/* Container & Profile Card */
 .container {
-  max-width: 1000px;
+  max-width: 900px;
   margin: 2rem auto;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
-/* Profile container layout */
 .profile-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+.profile-container:hover {
+  transform: translateY(-3px);
 }
 
-/* Left Column: Profile Image & Social Icons */
+/* Left Column */
 .profile-left {
   flex: 1;
-  min-width: 250px;
-  max-width: 300px;
-  padding-right: 1.5rem;
-  border-right: 1px solid #e0e0e0;
+  background: linear-gradient(135deg, #1d2671, #4ca1af);
+  padding: 1.5rem;
   text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.3);
 }
 .profile-picture-wrapper {
   position: relative;
-  display: inline-block;
+  margin-bottom: 1rem;
 }
 .profile-picture-wrapper img {
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid #1d2671;
-  transition: opacity 0.3s ease;
+  border: 4px solid #fff;
+  transition: transform 0.3s ease;
+}
+.profile-picture-wrapper img:hover {
+  transform: scale(1.05);
 }
 .edit-image-btn {
-  display: none;
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background-color: rgba(29, 38, 113, 0.8);
-  color: #fff;
+  background: rgba(29,38,113,0.85);
   border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: #fff;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  display: none;
+  transition: background 0.3s ease;
 }
 .edit-image-btn:hover {
-  background-color: rgba(195, 55, 100, 0.8);
-}
-.profile-picture-wrapper:hover img {
-  opacity: 0.8;
+  background: rgba(195,55,100,0.85);
 }
 .profile-picture-wrapper:hover .edit-image-btn {
   display: block;
 }
 .social-icons {
   list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
   margin-top: 1rem;
-  padding: 0;
-}
-.social-icons li {
-  margin: 0.5rem 0;
 }
 .social-icons li a {
-  color: #1d2671;
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: color 0.3s ease;
+  color: #fff;
+  font-size: 1.6rem;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 .social-icons li a:hover {
-  color: #c33764;
+  color: #ffdd57;
+  transform: scale(1.1);
 }
 
-/* Right Column: Profile Details */
+/* Right Column */
 .profile-right {
-  flex: 2;
-  padding-left: 1.5rem;
+  flex: 1.2;
+  padding: 1.5rem 2rem;
 }
 .profile-right h2 {
   font-size: 2rem;
+  font-weight: 700;
   color: #1d2671;
   margin-bottom: 0.5rem;
 }
 .profile-right p {
   font-size: 1rem;
+  color: #555;
   margin-bottom: 0.75rem;
 }
-.profile-detail span.label {
+.profile-detail span {
   font-weight: 500;
-  color: #555;
 }
 
 /* Edit Profile Button */
 .edit-btn {
-  background-color: #c33764;
+  background: #1d2671;
   color: #fff;
   border: none;
-  padding: 0.75rem 1.25rem;
-  margin-top: 1.5rem;
-  border-radius: 5px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 1.5rem;
 }
 .edit-btn:hover {
-  background-color: #a82b57;
+  background: #4ca1af;
+  transform: translateY(-2px);
 }
 
-/* Edit Form Styles */
-.edit-form {
-  background: #f9fafb;
-  border: 1px solid #e0e0e0;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-top: 2rem;
-  display: none; /* Hidden by default */
-}
-.edit-form h2 {
-  margin-bottom: 1rem;
-  color: #1d2671;
-}
-.edit-form label {
-  display: block;
-  margin: 0.5rem 0 0.25rem;
-  font-weight: 500;
-  color: #555;
-}
-.edit-form input[type="text"],
-.edit-form textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-.form-buttons {
-  display: flex;
-  gap: 1rem;
-}
-.save-btn,
-.cancel-btn {
-  background-color: #1d2671;
-  color: #fff;
-  border: none;
-  padding: 0.75rem 1.25rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.cancel-btn {
-  background-color: #555;
-}
-.save-btn:hover {
-  background-color: #151a44;
-}
-.cancel-btn:hover {
-  background-color: #333;
-}
-
-/* Custom Popup Styles */
+/* Standard Popup Styles */
 .popup {
   position: fixed;
   top: 20px;
   right: 20px;
-  padding: 1rem 1.5rem;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  font-size: 1rem;
+  padding: 16px 24px;
+  border-radius: 8px;
+  font-size: 16px;
   z-index: 10000;
-  display: none;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+}
+.popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.popup.success {
+  background: #4CAF50;
+  color: #fff;
+}
+.popup.error {
+  background: #f44336;
+  color: #fff;
 }
 
-/* Footer */
-footer {
-  background: #1d2671;
-  color: #fff;
-  text-align: center;
-  padding: 1rem 0;
+/* Overlay Popup Styles */
+.popup-overlay {
   position: fixed;
-  bottom: 0;
-  width: 100%;
-  font-size: 0.9rem;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(79deg, rgba(7,16,64,1) 0%, rgba(10,54,195,1) 53%, rgba(26,29,128,1) 89%);
+  color: #ffffff;
+  padding: 20px 25px;
+  border-radius: 10px;
+  z-index: 10001;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+  font-family: 'Montserrat', sans-serif;
+  display: none;
 }
-footer nav a {
-  color: #f9fafb;
-  text-decoration: none;
-  margin: 0 1rem;
-  transition: color 0.3s ease;
+.popup-overlay #popup-message {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
-footer nav a:hover {
-  color: #c33764;
+.popup-overlay #popup-timer {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.popup-overlay .close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #fff;
+  transition: color 0.2s ease;
+}
+.popup-overlay .close:hover {
+  color: #ffeb3b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+  }
+  .profile-left {
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding: 1.5rem;
+  }
+  .profile-right {
+    padding: 1.5rem;
+  }
 }

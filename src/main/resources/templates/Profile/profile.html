@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>User Profile - Your Code Companion</title>
+    <!-- Font Awesome for social icons -->
+    <script src="https://kit.fontawesome.com/b8b432d7d3.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="profile.css">
     <link rel="icon" type="image/png" href="../HomePage/Images/Fabicon.png">
 </head>
@@ -14,13 +16,14 @@
         <div class="profile-left">
             <div class="profile-picture-wrapper">
                 <img id="profileImage" src="Images/default-profile.png" alt="Profile Picture">
-                <!-- Optional hover edit for image on this page -->
+                <!-- Edit image button appears on hover -->
+                <button id="editImageBtn" class="edit-image-btn"><i class="fas fa-camera"></i></button>
             </div>
             <ul class="social-icons">
-                <li><a href="#" target="_blank">GitHub</a></li>
-                <li><a href="#" target="_blank">LinkedIn</a></li>
-                <li><a href="#" target="_blank">GeeksforGeeks</a></li>
-                <li><a href="#" target="_blank">LeetCode</a></li>
+                <li><a id="githubLink" href="#" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></li>
+                <li><a id="linkedinLink" href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a></li>
+                <li><a id="gfgLink" href="#" target="_blank" title="GeeksforGeeks"><i class="fab fa-geeksforgeeks"></i></a></li>
+                <li><a id="leetcodeLink" href="#" target="_blank" title="LeetCode"><i class="fas fa-code"></i></a></li>
             </ul>
         </div>
         <!-- Right Column: Profile Details -->
@@ -32,11 +35,27 @@
             <p class="profile-detail">
                 GeeksforGeeks: <span id="geeksforgeeksId">-</span> | LeetCode: <span id="leetcodeId">-</span>
             </p>
-            <!-- Clicking this button navigates to the separate edit profile page -->
-            <button id="editProfileBtn" class="edit-btn" onclick="window.location.href='updateProfile.html'">Edit Profile</button>
+            <button id="editProfileBtn" class="edit-btn" onclick="window.location.href='updateProfile.html'">
+                Edit Profile
+            </button>
         </div>
     </div>
 </div>
+
+
+
+<!-- Custom Popup (dynamically created by JS if needed) --><!-- Standard Popup (for messages that do not include redirection) -->
+<div id="popup" class="popup"></div>
+
+<!-- Overlay Popup (for redirect countdown) -->
+<div id="popupid" class="popup-overlay" style="display:none;">
+    <span id="popup-message"></span>
+    <div id="popup-timer"></div>
+    <span class="close">&times;</span>
+</div>
+
+
+
 
 <script src="profile.js"></script>
 </body>

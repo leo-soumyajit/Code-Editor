@@ -26,7 +26,7 @@ public class JwtService {
                 .claim("email",userEntities.getEmail())
                 .claim("roles",userEntities.getRoles().toString())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*10)) //10 min
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*1)) //10 min
                 .signWith(getSecretKey())
                 .compact();
     }
