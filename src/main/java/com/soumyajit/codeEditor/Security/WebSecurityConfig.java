@@ -44,7 +44,7 @@ public class WebSecurityConfig {
                 // Permit OPTIONS preflight requests for all endpoints
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/code/**", "/user-profile/**").authenticated()
+                        .requestMatchers("/api/code/execute", "/user-profile/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
