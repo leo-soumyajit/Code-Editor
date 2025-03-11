@@ -347,3 +347,35 @@ footer {
   /* Optional: add some margin */
   margin-left: 20px;
 }
+
+/* Loader Styles */
+/* Loader Overlay */
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent dark overlay */
+  display: none; /* Hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+/* Updated Spinner Styles */
+.spinner {
+  width: 80px;             /* Increased size */
+  height: 80px;            /* Increased size */
+  border: 10px solid rgba(255, 255, 255, 0.2);  /* Light border */
+  border-top: 10px solid #ffffff;  /* White top border for contrast */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Keyframes for Spinner Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+

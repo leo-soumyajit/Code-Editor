@@ -1,13 +1,14 @@
-// --------------------------
 // Authentication Check: Redirect if no access token is found.
-// --------------------------
 if (!localStorage.getItem('accessToken')) {
   window.location.href = '../HomePage/home.html';
 }
 
-// --------------------------
+// Ensure the loader is hidden on page load.
+window.onload = function() {
+  hideLoader();
+};
+
 // Mapping and Boilerplate Data
-// --------------------------
 const fileMapping = {
   "java": "Main.java",
   "python": "Main.py",
@@ -42,22 +43,30 @@ int main() {
 }`
 };
 
-// --------------------------
-// Popup Function: Displays a message and optionally redirects to login
-// --------------------------
+// Loader Functions
+function showLoader() {
+  const loader = document.getElementById("loader");
+  if (loader) {
+    loader.style.display = "flex";
+  }
+}
+
+function hideLoader() {
+  const loader = document.getElementById("loader");
+  if (loader) {
+    loader.style.display = "none";
+  }
+}
+
+// Popup Function: For errors or other messages
 function showPopup(message, type, redirect) {
-  // Get the popup elements from your HTML
   const popup = document.getElementById('popup');
   const popupMessage = document.getElementById('popup-message');
   const popupTimer = document.getElementById('popup-timer');
 
-  // Set the message content (you may style it based on type)
   popupMessage.textContent = message;
-
-  // Show the popup overlay
   popup.style.display = 'block';
 
-  // If redirect is true, start a countdown
   if (redirect) {
     let seconds = 3;
     popupTimer.textContent = "Redirecting in " + seconds + " seconds...";
@@ -73,12 +82,22 @@ function showPopup(message, type, redirect) {
   }
 }
 
-// --------------------------
+// Analysis Popup Function: Display the analysis result in a nice popup
+function showAnalysisPopup(message) {
+  const popup = document.getElementById('popup');
+  const popupMessage = document.getElementById('popup-message');
+  popupMessage.textContent = message;
+  popup.style.display = 'block';
+}
+
+// Close popup when clicking on the close button
+document.querySelector('.close').addEventListener('click', function() {
+  document.getElementById('popup').style.display = 'none';
+});
+
 // Monaco Editor and Editor Functionality
-// --------------------------
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs' } });
 require(['vs/editor/editor.main'], function() {
-  // Define a custom theme for the editor.
   monaco.editor.defineTheme('myCustomTheme', {
     base: 'vs-dark',
     inherit: true,
@@ -100,7 +119,6 @@ require(['vs/editor/editor.main'], function() {
     }
   });
 
-  // Create the Monaco Editor inside the 'editor-container' element.
   const editor = monaco.editor.create(document.getElementById('editor-container'), {
     value: boilerplateCodes["java"],
     language: 'java',
@@ -108,12 +126,8 @@ require(['vs/editor/editor.main'], function() {
     automaticLayout: true
   });
 
-  // Make editor globally accessible.
   window.editor = editor;
 
-  // --------------------------
-  // Text Size Increase/Decrease Functions
-  // --------------------------
   let currentFontSize = 14;
   editor.updateOptions({ fontSize: currentFontSize });
 
@@ -129,17 +143,12 @@ require(['vs/editor/editor.main'], function() {
     }
   };
 
-  // --------------------------
-  // Update the Editor when the Language or Theme is Changed
-  // --------------------------
+  // Update Editor when Language or Theme is changed
   document.getElementById('language-select').addEventListener('change', function() {
     const selectedLang = this.value;
     monaco.editor.setModelLanguage(editor.getModel(), (selectedLang === 'cpp') ? 'cpp' : selectedLang);
     document.getElementById('file-name').textContent = "File used: " + fileMapping[selectedLang];
-    const langIcon = document.getElementById('language-icon');
-    if (langIcon) {
-      langIcon.src = languageImages[selectedLang];
-    }
+    document.getElementById('language-icon').src = languageImages[selectedLang];
     editor.setValue(boilerplateCodes[selectedLang]);
   });
 
@@ -148,9 +157,7 @@ require(['vs/editor/editor.main'], function() {
     monaco.editor.setTheme(selectedTheme);
   });
 
-  // --------------------------
   // Function to Execute Code via the Backend API
-  // --------------------------
   window.executeCode = function() {
     const code = editor.getValue();
     const language = document.getElementById('language-select').value;
@@ -190,29 +197,25 @@ require(['vs/editor/editor.main'], function() {
     });
   };
 
-  // --------------------------
   // Function to Reset Code (Restore Boilerplate)
-  // --------------------------
   window.resetCode = function() {
     const language = document.getElementById('language-select').value;
     editor.setValue(boilerplateCodes[language]);
   };
 
-  // --------------------------
-  // AI Autocomplete Function: Inserts suggestion into the editor at the cursor position.
-  // --------------------------
+  // AI Autocomplete Function with Delayed Loader
   window.autocomplete = async function() {
+    const loaderDelay = 600; // Delay in ms
+    let loaderTimeout = setTimeout(showLoader, loaderDelay);
     try {
       const userInput = editor.getValue();
       const response = await fetch('http://localhost:1010/api/code/autocomplete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userInput)
+        body: JSON.stringify({ code: userInput })
       });
       const result = await response.json();
-      const suggestion = result.data; // Assuming suggestion is in the data property
-
-      // Insert the suggestion at the current cursor position
+      const suggestion = result.data || "";
       const position = editor.getPosition();
       editor.executeEdits("insert-autocomplete", [{
          range: new monaco.Range(position.lineNumber, position.column, position.lineNumber, position.column),
@@ -222,32 +225,37 @@ require(['vs/editor/editor.main'], function() {
     } catch (error) {
       console.error("Error in autocomplete:", error);
       document.getElementById("output").textContent = "Error in autocomplete: " + error;
+    } finally {
+      clearTimeout(loaderTimeout);
+      hideLoader();
     }
   };
 
-  // --------------------------
-  // AI Code Analysis Function: Shows analysis result in the output section.
-  // --------------------------
+  // AI Code Analysis Function with Delayed Loader and Popup Display
   window.codeAnalysis = async function() {
+    const loaderDelay = 600; // Delay in ms
+    let loaderTimeout = setTimeout(showLoader, loaderDelay);
     try {
       const code = editor.getValue();
       const response = await fetch('http://localhost:1010/api/code/code-analysis', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(code)
+        body: JSON.stringify({ code })
       });
       const result = await response.json();
-      const analysis = result.data; // Assuming analysis is in the data property
-      document.getElementById("output").textContent = "Code Analysis:\n" + analysis;
+      const analysis = result.data || "";
+      // Instead of outputting to the output box, display analysis in a popup.
+      showAnalysisPopup("Code Analysis:\n" + analysis);
     } catch (error) {
       console.error("Error in code analysis:", error);
       document.getElementById("output").textContent = "Error in code analysis: " + error;
+    } finally {
+      clearTimeout(loaderTimeout);
+      hideLoader();
     }
   };
 
-  // --------------------------
   // Animated Background: Floating Code Tokens
-  // --------------------------
   const tokens = [
     "print", "#include<stdio.h>", "cout<<", "private", "if", "public static void main", "int main()", "printf",
     "function", "var", "const", "let", "if", "else", "for", "while",
@@ -280,24 +288,4 @@ require(['vs/editor/editor.main'], function() {
   for (let i = 0; i < tokenCount; i++) {
     createCodeToken();
   }
-
-  // --------------------------
-  // Total Active Users Counting Animation
-  // --------------------------
-  function animateCount(id, start, end, duration) {
-    const obj = document.getElementById(id);
-    let current = start;
-    const range = end - start;
-    const increment = range / (duration / 50);
-    const timer = setInterval(() => {
-      current += increment;
-      if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-        current = end;
-        clearInterval(timer);
-      }
-      obj.textContent = Math.floor(current) + "+";
-    }, 50);
-  }
-  // Uncomment the following line if you have an element with id 'user-count'
-  // animateCount("user-count", 0, 10500, 4000);
 });

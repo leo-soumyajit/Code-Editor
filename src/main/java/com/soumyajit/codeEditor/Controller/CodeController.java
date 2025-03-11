@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/code")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "http://localhost:63590")
 public class CodeController {
 
     private final CodeExecutionService codeExecutionService;
-    private final CodeAiService codeAiService;  // New service for AI functions
+    private final CodeAiService codeAiService;
 
     @PostMapping("/execute")
     public ResponseEntity<ApiResponse<String>> executeCode(@RequestBody CodeRequestDtos codeRequest) {
@@ -39,7 +39,7 @@ public class CodeController {
     @PostMapping("/code-analysis")
     public ResponseEntity<ApiResponse<String>> codeAnalysis(@RequestBody String code) {
         try {
-            String analysis = codeAiService.getCodeAnalysis(code); // Changed from getAutocomplete to getCodeAnalysis
+            String analysis = codeAiService.getCodeAnalysis(code);
             ApiResponse<String> response = new ApiResponse<>(analysis);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
@@ -47,5 +47,4 @@ public class CodeController {
                     .body(new ApiResponse<>("Error in code analysis: " + e.getMessage()));
         }
     }
-
 }

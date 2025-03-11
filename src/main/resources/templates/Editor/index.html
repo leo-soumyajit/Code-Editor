@@ -13,11 +13,16 @@
 <!-- Header Section -->
 <header class="header">
     <h1>Your Code Companion</h1>
-    <!-- Profile button on the right: clicking navigates to the profile page -->
     <a href="../Profile/profile.html" id="profileLink">
         <img src="Images/userIcon.png" alt="Profile Icon" class="profile-icon-btn">
     </a>
 </header>
+
+<!-- Loader Element -->
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+
 
 <!-- Background Animation Container -->
 <div class="code-animation"></div>
@@ -28,7 +33,6 @@
         <!-- Editor Section -->
         <section class="editor-section">
             <div class="editor-header">
-                <!-- Language Icon -->
                 <img id="language-icon" src="Images/Java-Emblem-removebg-preview.png" alt="Language Icon" />
                 <p id="file-name">File used: Main.java</p>
                 <div class="controls">
@@ -46,13 +50,11 @@
                     </select>
                     <button onclick="executeCode()">Run Code</button>
                     <button onclick="resetCode()">Reset Code</button>
-                    <!-- Text size controls -->
                     <button onclick="increaseFontSize()">A+</button>
                     <button onclick="decreaseFontSize()">A-</button>
-                    <!-- Additional buttons for AI features -->
+                    <!-- AI feature buttons -->
                     <button onclick="autocomplete()">Autocomplete</button>
                     <button onclick="codeAnalysis()">Code Analysis</button>
-
                 </div>
             </div>
             <div id="editor-container"></div>
