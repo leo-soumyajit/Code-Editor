@@ -4,11 +4,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const sendBtn = document.getElementById("send-btn");
     const typingIndicator = document.getElementById("typing-indicator");
 
-    // Append message to chat
+    // Append message to chat with proper formatting
     function appendChatMessage(message, sender) {
         const msgDiv = document.createElement("div");
         msgDiv.classList.add(sender === "user" ? "user-message" : "bot-message");
-        msgDiv.innerHTML = message;
+
+        if (sender === "bot") {
+            msgDiv.innerHTML = formatAIResponse(message);
+        } else {
+            msgDiv.textContent = message;
+        }
+
         chatLog.appendChild(msgDiv);
         chatLog.scrollTop = chatLog.scrollHeight;
     }
@@ -22,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         typingIndicator.style.display = "none";
     }
 
-    // Send Message
+    // Send Message to AI
     async function sendMessage() {
         const message = chatInput.value.trim();
         if (!message) return;
@@ -42,19 +48,38 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
             hideTyping();
 
-            // Format AI response (Bold headings)
-            const formattedResponse = formatResponse(result.data.response);
+            const formattedResponse = formatAIResponse(result.data.response);
             appendChatMessage(formattedResponse, "bot");
 
         } catch (error) {
             hideTyping();
-            appendChatMessage("Error connecting to Nocturne AI.", "bot");
+            appendChatMessage("🚨 Error: Nocturne AI is currently unavailable.", "bot");
         }
     }
 
-    // Format Response: Bold headers
-    function formatResponse(response) {
-        return response.replace(/(\b[A-Z][a-zA-Z\s]+):/g, "<b>$1</b>:");
+    // **🔥 Formatting AI Responses: Bold Headers + Code Blocks**
+    function formatAIResponse(response) {
+        // Convert headers (Example: "Title:" → **Title**)
+        response = response.replace(/(\b[A-Z][a-zA-Z\s]+):/g, "<b>$1</b>:");
+
+        // Detect and format **code blocks** (triple backticks)
+        response = response.replace(/```(\w+)?\n([\s\S]*?)```/g, function (match, lang, code) {
+            return `<pre><code class="${lang || 'plaintext'}">${escapeHTML(code)}</code></pre>`;
+        });
+
+        // Convert single-line breaks to HTML line breaks
+        response = response.replace(/\n/g, "<br>");
+
+        return response;
+    }
+
+    // Escape HTML to prevent unwanted execution
+    function escapeHTML(str) {
+        return str.replace(/&/g, "&amp;")
+                  .replace(/</g, "&lt;")
+                  .replace(/>/g, "&gt;")
+                  .replace(/"/g, "&quot;")
+                  .replace(/'/g, "&#039;");
     }
 
     // Event Listeners
