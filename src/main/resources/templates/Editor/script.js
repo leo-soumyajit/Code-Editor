@@ -25,21 +25,21 @@ const languageImages = {
 
 const boilerplateCodes = {
   "java": `public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello, world!");
-    }
+  public static void main(String[] args) {
+    System.out.println("Hello, world!");
+  }
 }`,
   "python": `print("Hello, world!")`,
   "c": `#include <stdio.h>
 int main() {
-    printf("Hello, world!\\n");
-    return 0;
+  printf("Hello, world!\\n");
+  return 0;
 }`,
   "cpp": `#include <iostream>
 using namespace std;
 int main() {
-    cout << "Hello, world!" << endl;
-    return 0;
+  cout << "Hello, world!" << endl;
+  return 0;
 }`
 };
 
@@ -58,15 +58,13 @@ function hideLoader() {
   }
 }
 
-// Popup Function: For errors or other messages
+// General Popup Function for messages (existing)
 function showPopup(message, type, redirect) {
   const popup = document.getElementById('popup');
   const popupMessage = document.getElementById('popup-message');
   const popupTimer = document.getElementById('popup-timer');
-
   popupMessage.textContent = message;
   popup.style.display = 'block';
-
   if (redirect) {
     let seconds = 3;
     popupTimer.textContent = "Redirecting in " + seconds + " seconds...";
@@ -82,20 +80,37 @@ function showPopup(message, type, redirect) {
   }
 }
 
-// Analysis Popup Function: Display the analysis result in a nice popup
-function showAnalysisPopup(message) {
-  const popup = document.getElementById('popup');
-  const popupMessage = document.getElementById('popup-message');
-  popupMessage.textContent = message;
-  popup.style.display = 'block';
+// Enhanced helper function to format analysis text.
+// Any line starting with "#" OR ending with ":" is considered a header and will be wrapped in <strong> tags.
+function formatAnalysisText(text) {
+  return text.split("\n").map(line => {
+    // Check if the line is a header by two heuristics:
+    // 1. It starts with one or more "#"
+    // 2. Or, it ends with a colon (":")
+    if (/^\s*#/.test(line) || line.trim().endsWith(":")) {
+      // Remove leading '#' and extra whitespace if present
+      const headingText = line.replace(/^\s*#+\s*/, "").trim();
+      return `<strong>${headingText}</strong>`;
+    }
+    return line;
+  }).join("<br>");
 }
 
-// Close popup when clicking on the close button
-document.querySelector('.close').addEventListener('click', function() {
-  document.getElementById('popup').style.display = 'none';
+// New Analysis Popup Function
+function displayAnalysisPopup(message) {
+  const analysisPopup = document.getElementById('popup-analysis');
+  const analysisMessage = document.getElementById('popup-analysis-message');
+  const formattedMessage = formatAnalysisText(message);
+  analysisMessage.innerHTML = formattedMessage;
+  analysisPopup.style.display = 'flex';
+}
+
+// Close the new analysis popup when its close button is clicked.
+document.querySelector('.close-analysis').addEventListener('click', function() {
+  document.getElementById('popup-analysis').style.display = 'none';
 });
 
-// Monaco Editor and Editor Functionality
+// Monaco Editor Setup
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs' } });
 require(['vs/editor/editor.main'], function() {
   monaco.editor.defineTheme('myCustomTheme', {
@@ -143,7 +158,6 @@ require(['vs/editor/editor.main'], function() {
     }
   };
 
-  // Update Editor when Language or Theme is changed
   document.getElementById('language-select').addEventListener('change', function() {
     const selectedLang = this.value;
     monaco.editor.setModelLanguage(editor.getModel(), (selectedLang === 'cpp') ? 'cpp' : selectedLang);
@@ -205,7 +219,7 @@ require(['vs/editor/editor.main'], function() {
 
   // AI Autocomplete Function with Delayed Loader
   window.autocomplete = async function() {
-    const loaderDelay = 600; // Delay in ms
+    const loaderDelay = 600;
     let loaderTimeout = setTimeout(showLoader, loaderDelay);
     try {
       const userInput = editor.getValue();
@@ -218,9 +232,9 @@ require(['vs/editor/editor.main'], function() {
       const suggestion = result.data || "";
       const position = editor.getPosition();
       editor.executeEdits("insert-autocomplete", [{
-         range: new monaco.Range(position.lineNumber, position.column, position.lineNumber, position.column),
-         text: suggestion,
-         forceMoveMarkers: true
+        range: new monaco.Range(position.lineNumber, position.column, position.lineNumber, position.column),
+        text: suggestion,
+        forceMoveMarkers: true
       }]);
     } catch (error) {
       console.error("Error in autocomplete:", error);
@@ -231,9 +245,9 @@ require(['vs/editor/editor.main'], function() {
     }
   };
 
-  // AI Code Analysis Function with Delayed Loader and Popup Display
+  // AI Code Analysis Function with Delayed Loader and New Analysis Popup Display
   window.codeAnalysis = async function() {
-    const loaderDelay = 600; // Delay in ms
+    const loaderDelay = 600;
     let loaderTimeout = setTimeout(showLoader, loaderDelay);
     try {
       const code = editor.getValue();
@@ -244,11 +258,11 @@ require(['vs/editor/editor.main'], function() {
       });
       const result = await response.json();
       const analysis = result.data || "";
-      // Instead of outputting to the output box, display analysis in a popup.
-      showAnalysisPopup("Code Analysis:\n" + analysis);
+      // Display analysis result in the new popup with formatted headings.
+      displayAnalysisPopup("Code Analysis:\n" + analysis);
     } catch (error) {
       console.error("Error in code analysis:", error);
-      document.getElementById("output").textContent = "Error in code analysis: " + error;
+      displayAnalysisPopup("Error in code analysis: " + error);
     } finally {
       clearTimeout(loaderTimeout);
       hideLoader();

@@ -378,4 +378,72 @@ footer {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+/* Analysis Popup Overlay */
+/* Analysis Popup Overlay */
+#popup-analysis {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Dark semi-transparent overlay */
+  display: none; /* Hidden by default */
+  align-items: center;
+  justify-content: center;
+  z-index: 11000; /* High z-index to appear on top */
+  animation: fadeIn 0.3s ease;
+}
+
+/* Fade-in animation for the popup overlay */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Analysis Popup Content - Enhanced styling */
+#popup-analysis .popup-content {
+  background: linear-gradient(135deg, #ffffff, #f8f8f8); /* Subtle gradient */
+  padding: 20px 30px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  width: 70%;             /* 70% of viewport width */
+  max-width: 800px;       /* Maximum width */
+  height: 60%;            /* 60% of viewport height */
+  max-height: 600px;      /* Maximum height */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  position: relative;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #333;
+  overflow: auto;         /* Scrollbar appears if content overflows */
+  resize: both;           /* Allows manual resizing */
+  transition: transform 0.3s ease;
+}
+
+#popup-analysis .popup-content:hover {
+  transform: scale(1.02);
+}
+
+/* Popup Message Styling */
+#popup-analysis .popup-content #popup-analysis-message {
+  white-space: pre-wrap;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Close Button for Analysis Popup */
+#popup-analysis .popup-content .close-analysis {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+  transition: color 0.3s ease;
+}
+
+#popup-analysis .popup-content .close-analysis:hover {
+  color: #000;
+}
+
 

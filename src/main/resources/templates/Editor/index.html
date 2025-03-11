@@ -23,7 +23,6 @@
     <div class="spinner"></div>
 </div>
 
-
 <!-- Background Animation Container -->
 <div class="code-animation"></div>
 
@@ -60,10 +59,19 @@
             <div id="editor-container"></div>
         </section>
 
+        <!-- Existing Popup for General Messages -->
         <div id="popup" class="popup-overlay" style="display:none;">
             <span id="popup-message"></span>
             <div id="popup-timer"></div>
             <span class="close">&times;</span>
+        </div>
+
+        <!-- New Analysis Popup -->
+        <div id="popup-analysis" class="popup-overlay" style="display:none;">
+            <div class="popup-content">
+                <span id="popup-analysis-message"></span>
+                <span class="close-analysis">&times;</span>
+            </div>
         </div>
 
         <!-- Output Section -->

@@ -141,15 +141,19 @@ public class CodeAiService {
 
     /**
      * Uses Ollama to analyze the provided code and suggest improvements.
+     * Additionally, it requests the time complexity and space complexity of the code,
+     * and suggestions for a better approach if applicable.
      *
      * @param code The code snippet to analyze.
-     * @return Suggestions for improvements.
+     * @return Suggestions for improvements, including complexity analysis.
      */
     public String getCodeAnalysis(String code) {
         Map<String, Object> payload = new HashMap<>();
         payload.put("model", model);
-        payload.put("prompt", "Analyze the following code and suggest improvements:\n" + code);
-        payload.put("max_tokens", 50);
+        // Updated prompt to request complexity analysis and better approach suggestions.
+        payload.put("prompt", "Analyze the following code and provide improvements along with its time complexity and space complexity analysis. " +
+                "Also, suggest a better approach if applicable:\n" + code);
+        payload.put("max_tokens", 100); // Increase if you expect longer analysis.
         payload.put("stream", true);
 
         String result = webClient.post()
