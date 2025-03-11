@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatInput = document.getElementById("chat-input");
     const sendBtn = document.getElementById("send-btn");
     const typingIndicator = document.getElementById("typing-indicator");
-    const closeChatbot = document.getElementById("close-chatbot");
 
     // Append message to chat
     function appendChatMessage(message, sender) {
@@ -62,9 +61,5 @@ document.addEventListener("DOMContentLoaded", function () {
     sendBtn.addEventListener("click", sendMessage);
     chatInput.addEventListener("keypress", function (e) {
         if (e.key === "Enter") sendMessage();
-    });
-
-    closeChatbot.addEventListener("click", function () {
-        document.querySelector(".chat-container").style.display = "none";
     });
 });
