@@ -33,7 +33,7 @@ public class WebConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        config.setAllowedOrigins(Arrays.asList("http://localhost:63590"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:63342"));
         config.addAllowedHeader("*");
         config.setMaxAge(3600L);
 

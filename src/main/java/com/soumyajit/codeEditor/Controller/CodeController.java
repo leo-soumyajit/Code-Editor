@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/code")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:63590")
+@CrossOrigin(origins = "http://localhost:63342")
 public class CodeController {
 
     private final CodeExecutionService codeExecutionService;

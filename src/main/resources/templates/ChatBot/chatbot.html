@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nocturne AI - Your AI Assistant</title>
-    <link rel="stylesheet" href="chatbot.css">
+    <link rel="stylesheet" href="chatbot.css" />
 </head>
 <body>
 
-<div class="chat-container">
+<!-- Splash Screen -->
+<div id="splash">
+    <h1 data-text="Nocturne AI">Nocturne AI</h1>
+</div>
+
+<!-- Chat Container (initially hidden) -->
+<div class="chat-container" id="chat-container" style="display: none;">
     <div class="chat-header">
         <h2>Nocturne AI</h2>
     </div>
@@ -20,17 +26,14 @@
     </div>
     <div class="chat-input-container">
         <div class="input-box">
-            <input type="text" id="chat-input" placeholder="Ask me anything...">
+            <input type="text" id="chat-input" placeholder="Ask me anything..." />
             <button id="send-btn">
-                <img src="Images/send.png" alt="Send" class="send-icon">
+                <img src="Images/send.png" alt="Send" class="send-icon" />
             </button>
-
         </div>
     </div>
-
 </div>
 
-<script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
 <script src="chatbot.js"></script>
 </body>
 </html>
