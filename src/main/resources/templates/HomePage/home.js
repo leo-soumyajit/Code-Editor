@@ -107,3 +107,29 @@ window.addEventListener("load", function() {
   }, 300);
 });
 */
+document.addEventListener("DOMContentLoaded", function () {
+  const slider = document.querySelector(".slider");
+  const nextBtn = document.getElementById("next-slide");
+  const prevBtn = document.getElementById("prev-slide");
+  let currentSlide = 0;
+  const totalSlides = 4; // Total number of slides
+
+  function updateSlider() {
+    slider.style.transform = `translateX(-${currentSlide * 100}vw)`;
+  }
+
+  nextBtn.addEventListener("click", function () {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      updateSlider();
+    }
+  });
+
+  prevBtn.addEventListener("click", function () {
+    if (currentSlide > 0) {
+      currentSlide--;
+      updateSlider();
+    }
+  });
+});
+

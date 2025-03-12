@@ -178,6 +178,7 @@ body {
   background: #232323;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+  flex-direction: column;
 }
 
 /* Input Box */
@@ -227,3 +228,34 @@ body {
     padding: 15px;
   }
 }
+.code-block {
+  position: relative;
+
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 3px;
+}
+.copy-btn:hover {
+  background: #0056b3;
+}
+.ai-disclaimer {
+   margin-top: 8px;
+     text-align: center;
+     font-size: 0.85rem;
+     color: #999;
+ }
+
+

@@ -390,3 +390,381 @@ footer {
   background: transparent;
 }
 
+/* ---------- Functionalities Section (Full-Screen) ---------- */
+.functionalities-section {
+  width: 100vw;
+  height: 100vh;
+  /* Blue-themed animated gradient background */
+  background: linear-gradient(135deg, #0d1b2a, #1b263b);
+  animation: backgroundPulse 8s infinite alternate;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes backgroundPulse {
+  from {
+    background: linear-gradient(135deg, #0d1b2a, #1b263b);
+  }
+  to {
+    background: linear-gradient(135deg, #1a374d, #406882);
+  }
+}
+
+.functionalities-content {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Section Heading */
+.section-heading {
+  font-size: 3rem;
+  margin-bottom: 40px;
+  color: #fff;
+  animation: fadeIn 1s ease-out;
+}
+
+/* ---------- Slider Wrapper ---------- */
+.slider-wrapper {
+  width: 100%;
+  height: calc(100% - 120px); /* Leave space for heading and nav */
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  width: 400vw;  /* 4 slides × 100vw */
+  height: 100%;
+  transition: transform 0.8s ease-in-out;
+}
+
+/* ---------- Each Slide ---------- */
+.slide {
+  width: 100vw;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: transparent;
+}
+
+.slide-content {
+  max-width: 800px;
+  padding: 20px;
+  color: #fff;
+}
+
+.slide-content h3 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  animation: fadeInDown 1s ease-out;
+}
+
+.slide-content p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  color: #cfd8dc;
+  animation: fadeInUp 1s ease-out;
+}
+
+.slide-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  animation: zoomIn 1s ease-out;
+}
+
+/* ---------- Animated Code Illustration (Only in Slide 1) ---------- */
+.illustration-editor {
+  margin-top: 2rem;
+  margin-right: -10rem;
+  display: grid;
+  grid-template-rows: 24px auto;
+  justify-items: center;
+  position: relative;
+  width: 320px;
+  height: 180px;
+}
+
+.code-blocks {
+  position: relative;
+  width: 290px;
+  height: 145px;
+  background: #1D1E22;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.illustration-editor .code {
+  position: absolute;
+  width: 290px;
+  height: 145px;
+  background: #1D1E22;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  z-index: 5;
+}
+
+.illustration-editor .code header {
+  display: grid;
+  grid-template-columns: 36px auto 36px;
+  align-items: center;
+  padding: 5px;
+}
+
+.illustration-editor .code header svg {
+  margin: 5px;
+}
+
+.illustration-editor .code header h1 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 1.57px;
+  color: #C5C8D4;
+  margin: 0;
+}
+
+.illustration-editor .code .code-content {
+  margin: 0 10px 10px;
+  color: white;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Syntax Colors */
+.illustration-editor .code .c-r { color: #A88038; }
+.illustration-editor .code .c-o { color: #DE7300; }
+.illustration-editor .code .c-y { color: #E1CA72; }
+.illustration-editor .code .c-g { color: #74B087; }
+.illustration-editor .code .c-p { color: #9F8198; }
+.illustration-editor .code .c-b { color: #7A99AD; }
+.illustration-editor .code .c-c { color: #666666; }
+
+/* Editor Background Block */
+.editor-block {
+  position: absolute;
+  width: 500px;
+  height: 421px;
+  background: linear-gradient(109.61deg, #4C4F5A 4.26%, #202125 84.84%);
+  border-radius: 10px;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Position adjustments for individual code blocks */
+.code-html {
+  left: -100px;
+  top: 40px;
+}
+
+.code-css {
+  left: -25px;
+  top: 200px;
+}
+
+.code-js {
+  left: -175px;
+  top: 360px;
+}
+
+/* ---------- Navigation Buttons ---------- */
+.slider-navigation {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+}
+
+.nav-btn {
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #0078FF;
+  color: #fff;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .section-heading {
+    font-size: 2.5rem;
+  }
+  .slide-content h3 {
+    font-size: 2rem;
+  }
+  .slide-content p {
+    font-size: 1.2rem;
+  }
+  .nav-btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}
+
+
+/* ---------- Functionalities Section (Full-Screen, Blue Theme) ---------- */
+.features-section {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #0d1b2a, #1b263b);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Header for the Functionalities Section */
+.features-header {
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+  background: transparent;
+  margin-bottom: 0; /* Reduced gap */
+}
+
+.features-header h2 {
+  font-size: 3rem;
+  color: #fff;
+  margin: 0;
+}
+
+/* ---------- Slider Wrapper & Slides ---------- */
+.slider-wrapper {
+  width: 100%;
+  /* Subtract the header’s height from 100% to reduce gap. Adjust as needed. */
+  height: calc(100% - 40px);
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  width: 400vw; /* 4 slides x 100vw */
+  height: 100%;
+  transition: transform 0.8s ease-in-out;
+}
+
+/* Each Slide */
+.slide {
+  width: 100vw;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  padding: 20px; /* Adjust if you want more or less content padding */
+}
+
+/* Slide Content */
+.slide-content {
+  max-width: 800px;
+  text-align: center;
+  color: #fff;
+  margin-top: 0; /* Ensure no extra top margin */
+}
+
+.slide-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.slide-content p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  color: #cfd8dc;
+}
+
+.slide-content img {
+  max-width: 80%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- Slider Navigation Buttons ---------- */
+.slider-navigation {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+}
+
+.nav-btn {
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #0078FF;
+  color: #fff;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* ---------- Responsive Adjustments ---------- */
+@media (max-width: 768px) {
+  .features-header h2 {
+    font-size: 2.5rem;
+  }
+  .slide-content h2 {
+    font-size: 2rem;
+  }
+  .slide-content p {
+    font-size: 1.2rem;
+  }
+  .nav-btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}
+
+
